@@ -1,0 +1,11 @@
+.header{
+	height:100px;
+	width:100%;
+	background: linear-gradient(rgb(219, 255, 235), white);
+	border-radius:10px;
+	margin:auto;
+	z-index: 1;
+}
+.navbar{
+	padding: 20px;
+}
