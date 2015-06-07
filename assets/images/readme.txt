@@ -1,0 +1,1 @@
+ad image with name "body4.jpg" for the background
