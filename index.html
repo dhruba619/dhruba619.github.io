@@ -7,7 +7,7 @@
 	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
 	
 	<title>dhrubajyoti-bhattacharjee</title>
-
+        <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 	<link rel="shortcut icon" href="assets/images/gt_favicon.png">
 	
 	<!-- Bootstrap itself -->
@@ -141,6 +141,7 @@
 				<li><a href="#themes">Photos</a></li>
 				<li><a href="#games">Games</a></li>
 				<li><a href="#contact">Get in touch</a></li>
+				<li><a href="#time">Check the time</a></li>
 			</ul>
 		</div>
 	</div>
@@ -286,11 +287,84 @@
 
 	</div>
 </section>
+<section class="section" id="time">
+	<div id="chartdiv"></div>	
+</section>	
 <!-- Load js libs only when the page is loaded. -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script src="assets/js/modernizr.custom.72241.js"></script>
 <!-- Custom template scripts -->
 <script src="assets/js/magister.js"></script>
+<script>
+	var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "gauge",
+  "theme": "light",
+  "startDuration": 0.3,
+  "marginTop": 20,
+  "marginBottom": 50,
+  "axes": [ {
+    "axisAlpha": 0.3,
+    "endAngle": 360,
+    "endValue": 12,
+    "minorTickInterval": 0.2,
+    "showFirstLabel": false,
+    "startAngle": 0,
+    "axisThickness": 1,
+    "valueInterval": 1
+  } ],
+  "arrows": [ {
+    "radius": "50%",
+    "innerRadius": 0,
+    "clockWiseOnly": true,
+    "nailRadius": 10,
+    "nailAlpha": 1
+  }, {
+    "nailRadius": 0,
+    "radius": "80%",
+    "startWidth": 6,
+    "innerRadius": 0,
+    "clockWiseOnly": true
+  }, {
+    "color": "#CC0000",
+    "nailRadius": 4,
+    "startWidth": 3,
+    "innerRadius": 0,
+    "clockWiseOnly": true,
+    "nailAlpha": 1
+  } ],
+  "export": {
+    "enabled": true
+  }
+} );
+
+// update each second
+setInterval( updateClock, 1000 );
+
+// update clock
+function updateClock() {
+  if(chart.arrows.length > 0){
+    // get current date
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+    if(chart.arrows[ 0 ].setValue){
+      // set hours
+      chart.arrows[ 0 ].setValue( hours + minutes / 60 );
+      // set minutes
+      chart.arrows[ 1 ].setValue( 12 * ( minutes + seconds / 60 ) / 60 );
+      // set seconds
+      chart.arrows[ 2 ].setValue( 12 * date.getSeconds() / 60 );
+      }
+  }
+}
+</script>	
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/gauge.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+	
 </body>
 </html>
